@@ -9,18 +9,32 @@ type Book {
   publisher: String!
 }
 
-input BookInput{
+input BookInput {
   title: String!
   author: String!
   publisher: String!
 }
-type Mutation{
+
+type Pan {
+  id: String!
+  name: String!
+  createdAt: String!
+}
+input PanInput {
+  id: String!
+  name: String!
+  createdAt: String!
+}
+
+type Mutation {
   CreateBook(input: BookInput!): Book!
   DeleteBook(id: Int!): String!
   UpdateBook(id: Int!, input: BookInput!): String!
-
+  CreatePan(input: PanInput!): Pan!
 }
-type Query{
+type Query {
   GetAllBooks: [Book!]!
-  GetOneBook(id: Int!): Book! 
+  GetOneBook(id: Int!): Book!
+  GetAllPans: [Pan!]!
+  GetOnePan(id: String!): Pan!
 }

@@ -8,4 +8,5 @@ import "my_gql_server/app/repository"
 
 type Resolver struct {
 	BookRepository repository.BookRepository
+	PanRepository  repository.PanRepository
 }

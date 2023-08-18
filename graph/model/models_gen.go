@@ -14,3 +14,15 @@ type BookInput struct {
 	Author    string `json:"author"`
 	Publisher string `json:"publisher"`
 }
+
+type Pan struct {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	CreatedAt string `json:"createdAt"`
+}
+
+type PanInput struct {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	CreatedAt string `json:"createdAt"`
+}

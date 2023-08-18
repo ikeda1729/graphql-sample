@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 	"my_gql_server/graph/model"
 )
 
@@ -27,12 +26,37 @@ func (r *mutationResolver) CreateBook(ctx context.Context, input model.BookInput
 
 // DeleteBook is the resolver for the DeleteBook field.
 func (r *mutationResolver) DeleteBook(ctx context.Context, id int) (string, error) {
-	panic(fmt.Errorf("not implemented: DeleteBook - DeleteBook"))
+	err := r.BookRepository.DeleteBook(id)
+	if err != nil {
+		return "", err
+	}
+	successMessage := "successfully deleted"
+	return successMessage, nil
 }
 
 // UpdateBook is the resolver for the UpdateBook field.
 func (r *mutationResolver) UpdateBook(ctx context.Context, id int, input model.BookInput) (string, error) {
-	panic(fmt.Errorf("not implemented: UpdateBook - UpdateBook"))
+	err := r.BookRepository.UpdateBook(&input, id)
+	if err != nil {
+		return "nil", err
+	}
+	successMessage := "successfully updated"
+
+	return successMessage, nil
+}
+
+// CreatePan is the resolver for the CreatePan field.
+func (r *mutationResolver) CreatePan(ctx context.Context, input model.PanInput) (*model.Pan, error) {
+	pan, err := r.PanRepository.CreatePan(&input)
+	panCreated := &model.Pan{
+		CreatedAt: pan.CreatedAt.String(),
+		Name:      pan.Name,
+		ID:        pan.ID,
+	}
+	if err != nil {
+		return nil, err
+	}
+	return panCreated, nil
 }
 
 // GetAllBooks is the resolver for the GetAllBooks field.
@@ -46,7 +70,40 @@ func (r *queryResolver) GetAllBooks(ctx context.Context) ([]*model.Book, error) 
 
 // GetOneBook is the resolver for the GetOneBook field.
 func (r *queryResolver) GetOneBook(ctx context.Context, id int) (*model.Book, error) {
-	panic(fmt.Errorf("not implemented: GetOneBook - GetOneBook"))
+	book, err := r.BookRepository.GetOneBook(id)
+	selectedBook := &model.Book{
+		ID:        book.ID,
+		Author:    book.Author,
+		Publisher: book.Publisher,
+		Title:     book.Title,
+	}
+	if err != nil {
+		return nil, err
+	}
+	return selectedBook, nil
+}
+
+// GetAllPans is the resolver for the GetAllPans field.
+func (r *queryResolver) GetAllPans(ctx context.Context) ([]*model.Pan, error) {
+	pans, err := r.PanRepository.GetAllPans()
+	if err != nil {
+		return nil, err
+	}
+	return pans, nil
+}
+
+// GetOnePan is the resolver for the GetOnePan field.
+func (r *queryResolver) GetOnePan(ctx context.Context, id string) (*model.Pan, error) {
+	pan, err := r.PanRepository.GetOnePan(id)
+	selectedPan := &model.Pan{
+		ID:        pan.ID,
+		Name:      pan.Name,
+		CreatedAt: pan.CreatedAt.String(),
+	}
+	if err != nil {
+		return nil, err
+	}
+	return selectedPan, nil
 }
 
 // Mutation returns MutationResolver implementation.
