@@ -45,4 +45,4 @@ query {
     createdAt
   }
 }
-```
+```# graphql-sample
