@@ -4,8 +4,7 @@
 - graphqlサーバーはこちらのrepoを参考にした。
 https://github.com/iyiola-dev/go-graphql/tree/master
 - 上記repoにpan modelを追加する形で実装した
-- app dirにgorm関連のファイル
-- graph/schema.resolvers.goに`GetOnePan`, `GetAllPans`を追加しています
+- graph/schema.resolvers.goに`GetOnePan`, `GetAllPans`を追加
 
 ## cliからdbにデータを保存する
 `cd cli`してから`touch .env`して以下の環境情報をコピー
